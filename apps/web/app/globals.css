@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+/* One warm neutral family, five inks, one accent. Status colors mean status. */
+:root {
+  --ground: #efede8;
+  --surface: #f8f7f4;
+  --raised: #ffffff;
+  --line: #dedbd3;
+  --line-strong: #c9c5bb;
+
+  --ink: #1b1a17;
+  --ink-2: #4a4740;
+  --ink-3: #78746b;
+  --ink-4: #a29e94;
+
+  --accent: #2747d6;
+  --accent-soft: #e6eafb;
+
+  --fail: #c8411b;
+  --fail-soft: #f8e6df;
+  --pass: #1d7a45;
+  --pass-soft: #e2f1e8;
+  --warn: #9a6a12;
+  --warn-soft: #f6eedb;
+
+  --radius: 10px;
+  --shadow: 0 1px 0 rgba(27, 26, 23, 0.04), 0 8px 24px -12px rgba(27, 26, 23, 0.18);
+}
+
+@theme inline {
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
+  --font-serif: var(--font-plex-serif);
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-fail: var(--fail);
+  --color-fail-soft: var(--fail-soft);
+  --color-pass: var(--pass);
+  --color-pass-soft: var(--pass-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+}
+
+html,
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-plex-sans), system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* faint drafting grid behind everything: an instrument, not a landing page */
+body {
+  background-image:
+    linear-gradient(to right, rgba(27, 26, 23, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(27, 26, 23, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.num {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.card {
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.rise {
+  animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pulse-dot {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .pulse-dot {
+    animation: none;
+  }
+}
+
+/* episode modal: fade the backdrop, lift the panel; snappy, never from scale(0) */
+.modal-backdrop { animation: backdrop-in 180ms cubic-bezier(0.23, 1, 0.32, 1) both; }
+.modal-panel { animation: panel-in 220ms cubic-bezier(0.23, 1, 0.32, 1) both; }
+@keyframes backdrop-in { from { opacity: 0; } }
+@keyframes panel-in { from { opacity: 0; transform: translateY(6px) scale(0.97); } }
+.press { transition: transform 140ms ease-out, background-color 140ms ease; }
+.press:active { transform: scale(0.95); }
+@media (prefers-reduced-motion: reduce) {
+  .modal-panel { animation-name: backdrop-in; }
+}

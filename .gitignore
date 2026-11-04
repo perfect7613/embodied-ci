@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.venv/
+data/
+runs/
+*.npy
+*.parquet
+*.mp4
+node_modules/
+.next/
+.DS_Store
+.agents/
+.claude/
+skills-lock.json

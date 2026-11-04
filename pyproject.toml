@@ -1,0 +1,34 @@
+[project]
+name = "embodied-ci"
+version = "0.1.0"
+description = "EmbodiedCI: run a JEPA world model on a robot-arm task, find failures, fix them inside (weights) and outside (guardrails), gate every fix."
+requires-python = ">=3.11"
+# Local deps only. GPU/sim deps (torch, robosuite, mujoco) live in the Modal images in infra/modal_app.py.
+dependencies = [
+  "modal>=1.5",
+  "numpy",
+  "openai",
+  "python-dotenv>=1.2.4",
+]
+
+[project.optional-dependencies]
+# Self-hosted engine on your own CUDA box (deploy/ssh). Same pins as the Modal image.
+engine = [
+  "torch==2.5.1", "torchvision==0.20.1", "timm", "einops", "scipy", "numpy<2", "tqdm", "pyyaml",
+  "mujoco==3.2.6", "robosuite==1.5.1", "imageio[ffmpeg]", "fastapi[standard]", "uvicorn", "huggingface_hub>=0.26", "transformers>=4.57,<6", "pillow",
+]
+
+[dependency-groups]
+dev = [
+    "fastapi>=0.162.0",
+    "httpx>=0.28.1",
+    "pytest>=9.2.0",
+    "truss>=0.18.37",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["embodied", "harness", "infra"]
